@@ -14,7 +14,11 @@ namespace BLL.Pages
         public By NextButtonBy => By.XPath("//input[contains(@id, 'login-signin')]");
         public IWebElement NextButton => WebDriver.FindElement(NextButtonBy);
         public By SignNextButtonBy => By.XPath("//button[contains(@id, 'login-signin')]");
-        public IWebElement SignNextButton => WebDriver.FindElement(SignNextButtonBy);      
+        public IWebElement SignNextButton => WebDriver.FindElement(SignNextButtonBy);
+        public By ErrorEmailMessageBy => By.XPath("//p[@class='error-msg']");
+        public IWebElement ErrorEmailMessage => WebDriver.FindElement(ErrorEmailMessageBy);
+
+        
 
         public LoginYahooPage(IWebDriver webDriver) : base(webDriver) { }
     }

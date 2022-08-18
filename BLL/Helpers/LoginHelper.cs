@@ -21,6 +21,7 @@ namespace BLL.Helpers
             loginYahooPage.ClickTheWebElement(loginYahooPage.NextButton);
             //Thread.Sleep(10000); //captcha problem!!!
             loginYahooPage.WaitForPageLoadComplete(waitTime);
+            loginYahooPage.WaitVisibilityOfElement(waitTime, loginYahooPage.PasswordFieldBy);
             loginYahooPage.EnterInput(loginYahooPage.PasswordField, password);
             loginYahooPage.ClickTheWebElement(loginYahooPage.SignNextButton);
             loginYahooPage.WaitForPageLoadComplete(waitTime);
@@ -44,6 +45,35 @@ namespace BLL.Helpers
             mailingProtonPage.WaitVisibilityOfElement(waitTime, mailingProtonPage.NickNameBy);
 
             return mailingProtonPage.NickName.Text;
+        }
+
+        public string DoWrongEmailYahoo(string email, double waitTime)
+        {
+            MainYahooPage mainPage = new MainYahooPage(webDriver);
+            mainPage.ClickTheWebElement(mainPage.SignInButton);
+            LoginYahooPage loginYahooPage = new LoginYahooPage(webDriver);
+            loginYahooPage.EnterInput(loginYahooPage.EmailField, email);
+            loginYahooPage.ClickTheWebElement(loginYahooPage.NextButton);
+            loginYahooPage.WaitVisibilityOfElement(waitTime, loginYahooPage.ErrorEmailMessageBy);
+
+            return loginYahooPage.ErrorEmailMessage.Text;
+        }
+
+        public string DoWrongPasswordYahoo(string email, string password, double waitTime)
+        {
+            MainYahooPage mainPage = new MainYahooPage(webDriver);
+            mainPage.ClickTheWebElement(mainPage.SignInButton);
+            LoginYahooPage loginYahooPage = new LoginYahooPage(webDriver);
+            loginYahooPage.EnterInput(loginYahooPage.EmailField, email);
+            loginYahooPage.ClickTheWebElement(loginYahooPage.NextButton);
+            loginYahooPage.WaitForPageLoadComplete(waitTime);
+            loginYahooPage.WaitVisibilityOfElement(waitTime, loginYahooPage.PasswordFieldBy);
+            loginYahooPage.EnterInput(loginYahooPage.PasswordField, password);
+            loginYahooPage.ClickTheWebElement(loginYahooPage.SignNextButton);
+            loginYahooPage.WaitForPageLoadComplete(waitTime);
+            loginYahooPage.WaitVisibilityOfElement(waitTime, loginYahooPage.ErrorEmailMessageBy);
+
+            return loginYahooPage.ErrorEmailMessage.Text;
         }
     }
 }

@@ -29,5 +29,29 @@ namespace WebDriverTestingEmails
 
             Assert.AreEqual(nickName, actualString);
         }
+
+        [Test]
+        [TestCase(@"https://yahoo.com/", "testingWebDriver12@yahoo.com", "Sorry, we don't recognize this email.")]
+        public void TestSignInYahoo_WithIncorrectEmail_WarningMessageDisplayed(string url, string email, string errorMsg)
+        {
+            driver.Url = url;
+            LoginHelper loginHelper = new LoginHelper(driver);
+
+            string actualString = loginHelper.DoWrongEmailYahoo(email, DEFAULT_TIMEOUT);
+
+            Assert.AreEqual(errorMsg, actualString);
+        }
+
+        [Test]
+        [TestCase(@"https://yahoo.com/", "testingWebDriver1@yahoo.com", "123123123", "Invalid password. Please try again")]
+        public void TestSignInYahoo_WithCorrectEmailAndIncorrectPassword_WarningMessageDisplayed(string url, string email, string password, string errorMsg)
+        {
+            driver.Url = url;
+            LoginHelper loginHelper = new LoginHelper(driver);
+
+            string actualString = loginHelper.DoWrongPasswordYahoo(email, password, DEFAULT_TIMEOUT);
+
+            Assert.AreEqual(errorMsg, actualString);
+        }
     }
 }
