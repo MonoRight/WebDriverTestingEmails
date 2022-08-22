@@ -36,25 +36,28 @@ namespace BLL.Helpers
             webDriver.Navigate().GoToUrl(urlYahoo);
             loginHelper.DoLoginYahoo(yahooEmail, yahooPassword, waitTime);
             MainYahooPage mainYahooPage = new MainYahooPage(webDriver);
-            Thread.Sleep(25000); //because of waiting for sending mails
             mainYahooPage.ClickTheWebElement(mainYahooPage.MailButton);
             MailingYahooPage mailingYahooPage = new MailingYahooPage(webDriver);
             mailingYahooPage.WaitForPageLoadComplete(waitTime);
-            mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.SpamButtonBy);
+            mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.SavedMailButtonBy);
             mailingYahooPage.ClickTheWebElement(mailingYahooPage.SavedMailButton);
-
             try
             {
+                mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.CountOfMailsInboxBy);
+                webDriver.Navigate().Refresh();
                 if (mailingYahooPage.CountOfMailsInbox.Text.Contains("1"))
                 {
                     mailingYahooPage.ClickTheWebElement(mailingYahooPage.IncomeButton);
                 }
             }
-            catch (Exception)
+            catch (NoSuchElementException)
             {
+                webDriver.Navigate().Refresh();
                 mailingYahooPage.ClickTheWebElement(mailingYahooPage.SpamButton);
             }
 
+            mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.MailsContainerBy);
+            mailingYahooPage.ImplicitWait(waitTime);
             mailingYahooPage.ClickTheWebElement(mailingYahooPage.Mails.First());
             mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.TitleMailBy);
             mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.MessageMailBy);

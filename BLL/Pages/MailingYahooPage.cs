@@ -27,6 +27,10 @@ namespace BLL.Pages
         public IWebElement TitleMail => WebDriver.FindElement(TitleMailBy);
         public By MessageMailBy => By.XPath("//div[@dir='ltr']");
         public IWebElement MessageMail => WebDriver.FindElement(MessageMailBy);
+        public By MailsContainerBy => By.XPath("//div[@data-test-id='full-pane']");
+        public IWebElement MailsContainer => WebDriver.FindElement(MailsContainerBy);
+
+        
 
         public MailingYahooPage(IWebDriver webDriver) : base(webDriver) { }
     }
