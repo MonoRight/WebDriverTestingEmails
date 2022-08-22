@@ -4,13 +4,9 @@ using System.Threading;
 
 namespace BLL.Helpers
 {
-    public class LoginHelper
+    public class LoginHelper : BaseHelper
     {
-        private readonly WebDriver webDriver;
-        public LoginHelper(WebDriver webDriver)
-        {
-            this.webDriver = webDriver;
-        }
+        public LoginHelper(IWebDriver webDriver) : base(webDriver) { }
 
         public string DoLoginYahoo(string email, string password, double waitTime)
         {
@@ -43,7 +39,6 @@ namespace BLL.Helpers
             MailingProtonPage mailingProtonPage = new MailingProtonPage(webDriver);
             mailingProtonPage.WaitForPageLoadComplete(waitTime);
             mailingProtonPage.WaitVisibilityOfElement(waitTime, mailingProtonPage.NickNameBy);
-
             return mailingProtonPage.NickName.Text;
         }
 
@@ -75,5 +70,21 @@ namespace BLL.Helpers
 
             return loginYahooPage.ErrorEmailMessage.Text;
         }
+
+        public string DoWrongLoginProton(string email, string password, double waitTime)
+        {
+            MainProtonPage mainPage = new MainProtonPage(webDriver);
+            mainPage.ClickTheWebElement(mainPage.SignInButton);
+            mainPage.WaitForPageLoadComplete(waitTime);
+            LoginProtonPage loginProtonPage = new LoginProtonPage(webDriver);
+            loginProtonPage.WaitVisibilityOfElement(waitTime, loginProtonPage.SignButtonBy);
+            loginProtonPage.EnterInput(loginProtonPage.EmailField, email);
+            loginProtonPage.EnterInput(loginProtonPage.PasswordField, password);
+            loginProtonPage.ClickTheWebElement(loginProtonPage.SignButton);
+            loginProtonPage.WaitVisibilityOfElement(waitTime, loginProtonPage.ErrorNotificationBy);
+
+            return loginProtonPage.ErrorNotification.Text;
+        }
+
     }
 }

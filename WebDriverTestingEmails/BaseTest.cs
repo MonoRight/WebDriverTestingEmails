@@ -7,7 +7,7 @@ namespace WebDriverTestingEmails
     [TestFixture]
     public class BaseTest
     {
-        protected const double DEFAULT_TIMEOUT = 60;
+        protected const double DEFAULT_TIMEOUT = 90;
         protected WebDriver driver;
 
         [SetUp]

@@ -13,7 +13,10 @@ namespace BLL.Pages
         public IWebElement PasswordField => WebDriver.FindElement(PasswordFieldBy);
         public By SignButtonBy => By.XPath("//button[text()='Sign in']");
         public IWebElement SignButton => WebDriver.FindElement(SignButtonBy);
-        
+        public By ErrorNotificationBy => By.XPath("//div[@role='alert']");
+        public IWebElement ErrorNotification => WebDriver.FindElement(ErrorNotificationBy);
+       
+
         public LoginProtonPage(IWebDriver webDriver) : base(webDriver) { }
     }
 }

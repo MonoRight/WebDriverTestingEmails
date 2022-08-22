@@ -37,9 +37,9 @@ namespace WebDriverTestingEmails
             driver.Url = url;
             LoginHelper loginHelper = new LoginHelper(driver);
 
-            string actualString = loginHelper.DoWrongEmailYahoo(email, DEFAULT_TIMEOUT);
+            string actualError = loginHelper.DoWrongEmailYahoo(email, DEFAULT_TIMEOUT);
 
-            Assert.AreEqual(errorMsg, actualString);
+            Assert.AreEqual(errorMsg, actualError);
         }
 
         [Test]
@@ -49,9 +49,24 @@ namespace WebDriverTestingEmails
             driver.Url = url;
             LoginHelper loginHelper = new LoginHelper(driver);
 
-            string actualString = loginHelper.DoWrongPasswordYahoo(email, password, DEFAULT_TIMEOUT);
+            string actualError = loginHelper.DoWrongPasswordYahoo(email, password, DEFAULT_TIMEOUT);
 
-            Assert.AreEqual(errorMsg, actualString);
+            Assert.AreEqual(errorMsg, actualError);
         }
+
+        [Test]
+        [TestCase(@"https://proton.me/", "testingWebDriver12@proton.me", "2022testing2022", "Incorrect login credentials. Please try again")]
+        [TestCase(@"https://proton.me/", "testingWebDriver12@proton.me", "123123123", "Incorrect login credentials. Please try again")]
+        [TestCase(@"https://proton.me/", "testingWebDriver1@proton.me", "123123123", "Incorrect login credentials. Please try again")]
+        public void TestSignInProton_WithInCorrectEmailAndOrPassword_WarningMessageDisplayed(string url, string email, string password, string errorMsg)
+        {
+            driver.Url = url;
+            LoginHelper loginHelper = new LoginHelper(driver);
+
+            string actualError = loginHelper.DoWrongLoginProton(email, password, DEFAULT_TIMEOUT);
+
+            Assert.AreEqual(errorMsg, actualError);
+        }
+
     }
 }
