@@ -80,7 +80,7 @@ namespace BLL.Pages
 
         public void OpenNewTab()
         {
-            EnterInput(WebDriver.FindElement(By.TagName("body")), Keys.Control + "t");
+            ((IJavaScriptExecutor)WebDriver).ExecuteScript("window.open();");
         }
 
         public void ClearWebElement(IWebElement webElement)

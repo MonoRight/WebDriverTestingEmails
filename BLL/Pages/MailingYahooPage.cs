@@ -10,11 +10,9 @@ namespace BLL.Pages
         public By SpamButtonBy => By.XPath("//a[@data-test-folder-name='Bulk']");
         public IWebElement SpamButton => WebDriver.FindElement(SpamButtonBy); //when message goes to spam
         public By SavedMailButtonBy => By.XPath("//a[@data-test-folder-name='Draft']");
-        public IWebElement SavedMailButton => WebDriver.FindElement(SavedMailButtonBy); //when message goes to spam
+        public IWebElement SavedMailButton => WebDriver.FindElement(SavedMailButtonBy);
         public By CountOfMailsInboxBy => By.XPath("//a[@data-test-folder-name='Inbox']//span[@data-test-id='displayed-count']");
         public IWebElement CountOfMailsInbox => WebDriver.FindElement(CountOfMailsInboxBy);
-        
-
         public By IncomeButtonBy => By.XPath("//div[@data-test-folder-container='Inbox']");
         public IWebElement IncomeButton => WebDriver.FindElement(IncomeButtonBy); //when message goes to income
         public By MailsBy => By.XPath("//div[@data-test-id='senders']");
@@ -29,9 +27,19 @@ namespace BLL.Pages
         public IWebElement MessageMail => WebDriver.FindElement(MessageMailBy);
         public By MailsContainerBy => By.XPath("//div[@data-test-id='full-pane']");
         public IWebElement MailsContainer => WebDriver.FindElement(MailsContainerBy);
-
-        
-
+        public By CreateMessageBy => By.XPath("//a[@rel='noopener' and @role='button']");
+        public IWebElement CreateMessage => WebDriver.FindElement(CreateMessageBy);
+        public By SendMailToBy => By.Id("message-to-field");                        //ID locator
+        public IWebElement SendMailTo => WebDriver.FindElement(SendMailToBy);
+        public By TitleInputBy => By.XPath("//input[@data-test-id='compose-subject']");
+        public IWebElement TitleInput => WebDriver.FindElement(TitleInputBy);
+        public By MessageInputBy => By.XPath("//div[@data-test-id='rte']");
+        public IWebElement MessageInput => WebDriver.FindElement(MessageInputBy);
+        public By SendMailButtonBy => By.XPath("//button[@data-test-id='compose-send-button']");
+        public IWebElement SendMailButton => WebDriver.FindElement(SendMailButtonBy);
+        public By SuccessSendingMessageBy => By.XPath("//span[contains(text(), 'Ваше')]");
+        public IWebElement SuccessSendingMessage => WebDriver.FindElement(SuccessSendingMessageBy);
+      
         public MailingYahooPage(IWebDriver webDriver) : base(webDriver) { }
     }
 }

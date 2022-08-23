@@ -1,10 +1,6 @@
 ﻿using BLL.Pages;
 using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 
 namespace BLL.Helpers
 {
@@ -41,6 +37,7 @@ namespace BLL.Helpers
             mailingYahooPage.WaitForPageLoadComplete(waitTime);
             mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.SavedMailButtonBy);
             mailingYahooPage.ClickTheWebElement(mailingYahooPage.SavedMailButton);
+
             try
             {
                 mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.CountOfMailsInboxBy);
@@ -63,6 +60,39 @@ namespace BLL.Helpers
             mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.MessageMailBy);
 
             return (mailingYahooPage.TitleMail.Text, mailingYahooPage.MessageMail.Text);
+        }
+
+        public (string, string) SendMailFromYahooToProton(string urlProton, string urlYahoo, string protonEmail, string protonPassword, string yahooEmail, string yahooPassword, string title, string message, double waitTime)
+        {
+            webDriver.Navigate().GoToUrl(urlYahoo);
+            LoginHelper loginHelper = new LoginHelper(webDriver);
+            loginHelper.DoLoginYahoo(yahooEmail, yahooPassword, waitTime);
+            MainYahooPage mainYahooPage = new MainYahooPage(webDriver);
+            mainYahooPage.ClickTheWebElement(mainYahooPage.MailButton);
+            MailingYahooPage mailingYahooPage = new MailingYahooPage(webDriver);
+            mailingYahooPage.WaitForPageLoadComplete(waitTime);
+            mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.SavedMailButtonBy);
+            mailingYahooPage.ClickTheWebElement(mailingYahooPage.CreateMessage);
+            mailingYahooPage.EnterInput(mailingYahooPage.SendMailTo, protonEmail);
+            mailingYahooPage.EnterInput(mailingYahooPage.TitleInput, title);
+            mailingYahooPage.EnterInput(mailingYahooPage.MessageInput, message);
+            mailingYahooPage.ClickTheWebElement(mailingYahooPage.SendMailButton);
+            mailingYahooPage.WaitVisibilityOfElement(waitTime, mailingYahooPage.SuccessSendingMessageBy);
+            mailingYahooPage.OpenNewTab();
+            mailingYahooPage.SwitchToLastTab();
+            webDriver.Navigate().GoToUrl(urlProton);
+            loginHelper.DoLoginProton(protonEmail, protonPassword, waitTime);
+            MailingProtonPage mailingProtonPage = new MailingProtonPage(webDriver);
+            mailingProtonPage.WaitForPageLoadComplete(waitTime);
+            mailingProtonPage.WaitVisibilityOfElement(waitTime, mailingProtonPage.CountOfNewMailsBy);
+            mailingProtonPage.ClickTheWebElement(mailingProtonPage.ReceivedMails.First());
+            //mailingProtonPage.WaitVisibilityOfElement(waitTime, mailingProtonPage.MailInfoContainerBy);
+            mailingProtonPage.WaitVisibilityOfElement(waitTime, mailingProtonPage.SelectionButtonBy);
+            mailingProtonPage.ClickTheWebElement(mailingProtonPage.SelectionButton);
+            mailingProtonPage.ClickTheWebElement(mailingProtonPage.SelectionHtmlViewButton);
+            mailingProtonPage.WaitVisibilityOfElement(waitTime, mailingProtonPage.ReceivedMailMessageBy);
+            
+            return (mailingProtonPage.ReceivedMailTitle.Text, mailingProtonPage.ReceivedMailMessage.Text);
         }
     }
 }

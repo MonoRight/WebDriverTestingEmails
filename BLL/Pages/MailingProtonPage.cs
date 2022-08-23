@@ -9,7 +9,7 @@ namespace BLL.Pages
     {
         public By NickNameBy => By.XPath("//span[contains(@class, 'displayName')]");
         public IWebElement NickName => WebDriver.FindElement(NickNameBy);
-        public By NewMailButtonBy => By.CssSelector("button[class*='button-large']"); //CSS Selector
+        public By NewMailButtonBy => By.CssSelector("button[class*='button-large']"); //CSS Locator
         public IWebElement NewMailButton => WebDriver.FindElement(NewMailButtonBy);
         public By MailingHeaderBy => By.XPath("//header[contains(@class, 'title-bar')]");
         public IWebElement MailingHeader => WebDriver.FindElement(MailingHeaderBy);
@@ -27,8 +27,21 @@ namespace BLL.Pages
         public IWebElement SendMailButton => WebDriver.FindElement(SendMailButtonBy);
         public By SuccesInfoBy => By.XPath("//span[contains(text(), 'Сообщение отправлено')]");
         public IWebElement SuccesInfo => WebDriver.FindElement(SuccesInfoBy);
+        public By CountOfNewMailsBy => By.XPath("//a[contains(@href,'inbox')]//span[contains(@class,'navigation-counter-item') and text()='1']");
+        public IWebElement CountOfNewMails => WebDriver.FindElement(CountOfNewMailsBy);
+        public By ReceivedMailsBy => By.XPath("//div[contains(@data-testid,'message-item:')]");
+        public IList<IWebElement> ReceivedMails => WebDriver.FindElements(ReceivedMailsBy);
+        public By MailInfoContainerBy => By.XPath("//article[contains(@class,'message-container')]");
+        public IWebElement MailInfoContainer => WebDriver.FindElement(MailInfoContainerBy);
+        public By ReceivedMailTitleBy => By.XPath("//h1/span");
+        public IWebElement ReceivedMailTitle => WebDriver.FindElement(ReceivedMailTitleBy);
+        public By SelectionButtonBy => By.XPath("//button[@data-testid='message-header-expanded:more-dropdown']");
+        public IWebElement SelectionButton => WebDriver.FindElement(SelectionButtonBy);
+        public By SelectionHtmlViewButtonBy => By.XPath("//button[contains(@class,'dropdown-item-button')]/span[contains(text(), 'HTML')]");
+        public IWebElement SelectionHtmlViewButton => WebDriver.FindElement(SelectionHtmlViewButtonBy);
+        public By ReceivedMailMessageBy => By.XPath("//pre");
+        public IWebElement ReceivedMailMessage => WebDriver.FindElement(ReceivedMailMessageBy);
 
-        
         public MailingProtonPage(IWebDriver webDriver) : base(webDriver) { }
     }
 }
