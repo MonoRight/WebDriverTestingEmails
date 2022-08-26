@@ -34,7 +34,7 @@ namespace WebDriverTestingEmails
             Assert.AreEqual(title, tuple.Item1);
             Assert.AreEqual(message, tuple.Item2);
         }
-
+        
         [Test]
         [TestCase(@"https://proton.me/", @"https://yahoo.com/", "testingWebDriver1@proton.me", "2022testing2022", "testingWebDriver1@yahoo.com", "2022testing2022")]
         public void TestMailingFromYahooToProton_MailIsSuccessfull(string urlProton, string urlYahoo, string protonEmail, string protonPassword, string yahooEmail, string yahooPassword)
@@ -47,6 +47,6 @@ namespace WebDriverTestingEmails
 
             Assert.AreEqual(title, tuple.Item1);
             Assert.IsTrue(tuple.Item2.Contains(message));
-        }
+        }  
     }
 }

@@ -1,14 +1,14 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using OpenQA.Selenium.Firefox;
+using System.Configuration;
 
 namespace WebDriverTestingEmails.Driver
 {
     public class DriverInstance
     {
         private static IWebDriver driver;
+        private static string browser = ConfigurationManager.AppSettings["browser"];
 
         private DriverInstance() { }
 
@@ -16,9 +16,20 @@ namespace WebDriverTestingEmails.Driver
         {
             if (driver == null)
             {
-                driver = new ChromeDriver();
-                driver.Manage().Window.Maximize();
+                switch (browser)
+                {
+                    case "Chrome":
+                        driver = new ChromeDriver();
+                        break;
+                    case "Firefox":
+                        driver = new FirefoxDriver();
+                        break;
+                    default:
+                        driver = new ChromeDriver();
+                        break;
+                }
             }
+                   
             return driver;
         }
 

@@ -1,11 +1,12 @@
 using BLL.Helpers;
 using NUnit.Framework;
+using System.Configuration;
 
 namespace WebDriverTestingEmails
 {
     [TestFixture]
     public class LoginTests : BaseTest
-    {
+    {  
         [Test]
         [TestCase(@"https://yahoo.com/", "testingWebDriver1@yahoo.com", "2022testing2022", "Kylie")]
         public void TestSignInYahoo_WithCorrectEmailAndPassword_SignedIn(string url, string email, string password, string nickName)
@@ -67,6 +68,5 @@ namespace WebDriverTestingEmails
 
             Assert.AreEqual(errorMsg, actualError);
         }
-
     }
 }
